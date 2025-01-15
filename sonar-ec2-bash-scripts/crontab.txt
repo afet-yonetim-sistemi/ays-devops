@@ -1,0 +1,6 @@
+# Backup SonarQube daily at 3:00 AM
+0 3 * * * /home/$(whoami)/ays-sonarqube-backup.sh >> /home/$(whoami)/ays-sonarqube-backup.sh.log 2>&1
+# Upload logs to S3 daily at 3:05 AM
+5 3 * * * /home/$(whoami)/upload-log-to-s3.sh
+# Save container logs and upload them to S3 daily at 3:10 AM
+10 3 * * * /bin/bash /home/$(whoami)/save-container-logs.sh >> /home/$(whoami)/save-container-logs.log 2>&1
