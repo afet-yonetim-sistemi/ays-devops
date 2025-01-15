@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Define container names, log directory, and bucket details
-CONTAINERS=("sonarqube" "pgadmin" "postgresql")
-LOG_DIR="/home/$(whoami)/container-logs"
-BUCKET_NAME="ays-sonarqube-backup"
-S3_PATH="container-logs"  # Path within the bucket for log storage
+CONTAINERS=("<container-1>" "<container-2>" "<container-3>")
+LOG_DIR="<log-directory>"
+BUCKET_NAME="<bucket-name>"
+S3_PATH="<bucket-path>"  # Path within the bucket for log storage
 DATE=$(date +%Y%m%d%H%M)
 
 # Ensure the log directory exists
