@@ -3,7 +3,7 @@
 # Define variables
 LOG_FILE="/home/$(whoami)/ays-sonarqube-backup.sh.log"
 BUCKET_NAME="<bucket-name>"
-DATE=$(date +%Y%m%d%H%M)
+DATE=$(date +%Y-%m-%d-%H-%M)
 LOG_FILE_NAME="sonarqube-backup-$DATE-log"
 
 # Upload the log file to S3 with the new name

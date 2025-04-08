@@ -5,7 +5,7 @@ CONTAINERS=("<container-1>" "<container-2>" "<container-3>")
 LOG_DIR="<log-directory>"
 BUCKET_NAME="<bucket-name>"
 S3_PATH="<bucket-path>"  # Path within the bucket for log storage
-DATE=$(date +%Y%m%d%H%M)
+DATE=$(date +%Y-%m-%d-%H-%M)
 
 # Ensure the log directory exists
 mkdir -p "$LOG_DIR"
