@@ -1,15 +1,18 @@
 #!/bin/bash
 
-DIR_TO_BACKUP="<dir-to-backup>"
-BUCKET_NAME="<s3-bucket-name>"
-DATE=$(date +%Y-%m-%d-%H-%M)
+# Variables
+DIR_TO_BACKUP="/aysapps/monitoring/"
+BUCKET_NAME="ays-production-monitoring-ec2-container-backups"
+DATE=$(date +%Y_%m_%d_%H_%M)
 ZIP_NAME="$(basename "$DIR_TO_BACKUP")-backup-$DATE.zip"
 HOME_DIR="/home/$(whoami)"
 ZIP_PATH="$HOME_DIR/$ZIP_NAME"
-LOG_FILE="$HOME_DIR/container-backups-to-s3.log"
+LOG_FILE="$HOME_DIR/container-backups.log"
 
+# Date of the backup
 echo "############### Backup Started at $(date) ###############" | tee -a $LOG_FILE
 
+# Create the zip file (suppress file-level details)
 echo "Creating zip file: $ZIP_NAME..." | tee -a $LOG_FILE
 sudo zip -rq "$ZIP_PATH" "$DIR_TO_BACKUP"
 
@@ -23,6 +26,7 @@ else
     exit 1
 fi
 
+# Upload the zip file to S3
 echo "Uploading $ZIP_NAME to S3 bucket $BUCKET_NAME..." | tee -a $LOG_FILE
 aws s3 cp "$ZIP_PATH" "s3://$BUCKET_NAME/" --quiet | tee -a $LOG_FILE
 
@@ -36,4 +40,5 @@ fi
 echo "############### End of Logging Session on $(date) ###############" | tee -a $LOG_FILE
 echo "_____________________________________________________________" | tee -a $LOG_FILE
 
-aws s3 cp "$LOG_FILE" "s3://$BUCKET_NAME/logs/container-backups-to-s3-$DATE.log"
+# Upload the log file to S3
+aws s3 cp "$LOG_FILE" "s3://$BUCKET_NAME/logs/container-backups-$DATE.log"
