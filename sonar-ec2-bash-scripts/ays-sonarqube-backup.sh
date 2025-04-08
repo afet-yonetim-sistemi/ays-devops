@@ -3,7 +3,7 @@
 # Variables
 DIR_TO_BACKUP="<backup-directory>"  
 BUCKET_NAME="<bucket-name>"
-DATE=$(date +%Y%m%d%H%M)
+DATE=$(date +%Y-%m-%d-%H-%M)
 ZIP_NAME="$(basename "$DIR_TO_BACKUP")-backup-$DATE.zip"
 HOME_DIR="/home/$(whoami)"
 ZIP_PATH="$HOME_DIR/$ZIP_NAME"
