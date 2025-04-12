@@ -12,3 +12,6 @@
 
 # Ignore git related files
 .git/
+
+# Ignore JetBrains IDE settings folder
+.idea
