@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Variables
-DIR_TO_BACKUP="/aysapps/monitoring/"
+DIR_TO_BACKUP="/aysapps/monitoring"
 BUCKET_NAME="ays-production-monitoring-ec2-container-backups"
 DATE=$(date +%Y_%m_%d_%H_%M)
 ZIP_NAME="$(basename "$DIR_TO_BACKUP")-backup-$DATE.zip"
