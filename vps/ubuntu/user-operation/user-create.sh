@@ -6,7 +6,7 @@
 # Make script executable and run with sudo
 # nano user-create.sh
 # chmod +x user-create.sh
-# sudo ./user-create.sh
+# bash ./user-create.sh
 
 echo "
      ___  ____    ____  _______,

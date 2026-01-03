@@ -6,7 +6,7 @@
 # Make script executable and run with sudo
 # nano ssh-configure.sh
 # chmod +x ssh-configure.sh
-# sudo ./ssh-configure.sh
+# bash ./ssh-configure.sh
 
 echo "
      ___  ____    ____  _______,

@@ -6,7 +6,7 @@
 # Make script executable and run with sudo
 # nano user-delete.sh
 # chmod +x user-delete.sh
-# sudo ./user-delete.sh
+# bash ./user-delete.sh
 
 echo "
      ___  ____    ____  _______,
