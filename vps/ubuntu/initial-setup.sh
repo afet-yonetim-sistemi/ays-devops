@@ -52,3 +52,9 @@ mv /home/${SSH_USER}/setup /aysapps/setup
 chown -R root:root /aysapps/setup
 
 EOF"
+
+ssh -p "$SSH_PORT" -t "${SSH_USER}@${SERVER_IP}" \
+"sudo bash -c 'cd /aysapps/setup; \
+chmod +x -R .; \
+bash ./docker/docker-setup.sh; \
+exec bash'"
