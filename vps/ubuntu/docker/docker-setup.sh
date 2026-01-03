@@ -20,6 +20,12 @@ echo "
 :: AYS | Afet Yönetim Sistemi ::
 "
 
+if command -v docker >/dev/null 2>&1; then
+  echo ""
+  echo "✅ Docker already installed: $(docker -v 2>&1)"
+  exit 0
+fi
+
 # Updates the package index (refreshes available package lists).
 sudo apt update
 
