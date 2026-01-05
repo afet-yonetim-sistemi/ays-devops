@@ -54,7 +54,7 @@ ssh -p "$SSH_PORT" -t "${SSH_USER}@${SERVER_IP}" "sudo bash - <<'EOF'
 set -e
 
 # Prepare target directory
-cd /home/ubuntu
+cd /home/${SSH_USER}
 mkdir -p /aysapps
 
 # Ensure a clean setup directory
