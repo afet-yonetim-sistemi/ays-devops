@@ -62,6 +62,7 @@ rm -rf /aysapps/setup
 
 # Remove files that should not be kept or executed
 rm -f /home/${SSH_USER}/setup/initial-setup.sh
+cp /home/${SSH_USER}/setup/user-operation /home/${SSH_USER}/scripts/user-operation
 rm -f /home/${SSH_USER}/setup/user-operation
 
 # Move setup to the final system location
