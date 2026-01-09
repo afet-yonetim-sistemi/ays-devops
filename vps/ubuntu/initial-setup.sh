@@ -62,6 +62,11 @@ rm -rf /aysapps/setup
 
 # Remove files that should not be kept or executed
 rm -f /home/${SSH_USER}/setup/initial-setup.sh
+
+
+# === SETUP USER OPERATION SCRIPT ===
+# Ensure scripts directory exists and copy the operation script
+mkdir -p /home/${SSH_USER}/scripts
 cp /home/${SSH_USER}/setup/user-operation /home/${SSH_USER}/scripts/user-operation
 rm -f /home/${SSH_USER}/setup/user-operation
 
