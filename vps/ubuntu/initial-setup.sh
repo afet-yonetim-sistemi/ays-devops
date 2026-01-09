@@ -18,6 +18,8 @@ echo "
 :: AYS | Afet Yönetim Sistemi ::
 "
 
+# === SERVER IP / HOST INPUT ===
+# Ask for server IP/host until a non-empty value is provided
 while true; do
   echo ""
   read -p "➡️ Enter server IP (or host): " SERVER_IP
@@ -25,30 +27,48 @@ while true; do
   echo "Please enter a server IP/host."
 done
 
+
+# === SSH CONNECTION SETTINGS ===
+# Read SSH username and port, apply defaults if empty
 read -p "➡️ Enter SSH username (default: ubuntu): " SSH_USER
 SSH_USER="${SSH_USER:-ubuntu}"
 
 read -p "➡️ Enter SSH port (default: 22): " SSH_PORT
 SSH_PORT="${SSH_PORT:-22}"
 
+
+# === COPY LOCAL SETUP TO REMOTE SERVER ===
+# Copy the current directory to the remote user's home directory
 echo ""
 echo "📦 Copying current directory -> ${SSH_USER}@${SERVER_IP}:~/setup"
 scp -P "$SSH_PORT" -r . "${SSH_USER}@${SERVER_IP}:~/setup" || exit 1
 
+
+# === MOVE SETUP INTO SYSTEM DIRECTORY WITH SUDO ===
+# Connect via SSH and move the setup directory to /aysapps with root permissions
 echo ""
 echo "🧱 Moving to /aysapps/setup with sudo..."
 ssh -p "$SSH_PORT" -t "${SSH_USER}@${SERVER_IP}" "sudo bash - <<'EOF'
+
+# Fail fast on the remote machine if any command fails
 set -e
 
-cd /home/ubuntu
-
+# Prepare target directory
+cd /home/${SSH_USER}
 mkdir -p /aysapps
 
+# Ensure a clean setup directory
 rm -rf /aysapps/setup
+
+# Remove files that should not be kept or executed
 rm -f /home/${SSH_USER}/setup/initial-setup.sh
+cp /home/${SSH_USER}/setup/user-operation /home/${SSH_USER}/scripts/user-operation
 rm -f /home/${SSH_USER}/setup/user-operation
 
+# Move setup to the final system location
 mv /home/${SSH_USER}/setup /aysapps/setup
+
+# Set root ownership for security and consistency
 chown -R root:root /aysapps/setup
 
 EOF"
