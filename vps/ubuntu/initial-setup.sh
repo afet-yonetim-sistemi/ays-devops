@@ -78,6 +78,11 @@ chown -R root:root /aysapps/setup
 
 EOF"
 
+
+# === EXECUTE REMOTE SETUP SCRIPTS ===
+# Connect via SSH, set permissions, and execute the Docker setup script
+echo ""
+echo "🚀 Executing Docker setup on remote server..."
 ssh -p "$SSH_PORT" -t "${SSH_USER}@${SERVER_IP}" \
 "sudo bash -c 'cd /aysapps/setup; \
 chmod +x -R .; \
