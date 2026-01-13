@@ -62,6 +62,11 @@ rm -rf /aysapps/setup
 
 # Remove files that should not be kept or executed
 rm -f /home/${SSH_USER}/setup/initial-setup.sh
+
+
+# === SETUP USER OPERATION SCRIPT ===
+# Ensure scripts directory exists and copy the operation script
+mkdir -p /home/${SSH_USER}/scripts
 cp /home/${SSH_USER}/setup/user-operation /home/${SSH_USER}/scripts/user-operation
 rm -f /home/${SSH_USER}/setup/user-operation
 
@@ -72,3 +77,14 @@ mv /home/${SSH_USER}/setup /aysapps/setup
 chown -R root:root /aysapps/setup
 
 EOF"
+
+
+# === EXECUTE REMOTE SETUP SCRIPTS ===
+# Connect via SSH, set permissions, and execute the Docker setup script
+echo ""
+echo "🚀 Executing Docker setup on remote server..."
+ssh -p "$SSH_PORT" -t "${SSH_USER}@${SERVER_IP}" \
+"sudo bash -c 'cd /aysapps/setup; \
+chmod +x -R .; \
+bash ./docker/docker-setup.sh; \
+exec bash'"
