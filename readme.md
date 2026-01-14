@@ -15,6 +15,26 @@ In the event of a disaster, timely deployment of services is critical. This repo
 - **Monitoring and Logging**: Integrated with monitoring and logging tools to provide real-time insights into the status of deployed services.
 - **Security**: Ensures that all deployed services adhere to security best practices to protect sensitive data and maintain operational integrity.
 
+---
+
+## 📂 Repository Structure
+
+This section provides a brief overview of the main directories. For specific details, please check the `README.md` file located inside each directory.
+
+### `terraform/`
+Contains the Infrastructure as Code (IaC) configuration files. This directory is responsible for provisioning and managing the cloud resources on AWS.
+> **Documentation:** Please refer to `terraform/README.md` for module details and usage.
+
+### `aws/`
+Includes AWS-specific utility scripts and configurations, such as credential management, production monitoring scripts, and SonarQube setups for EC2 instances.
+
+
+### `vps/`
+Contains configuration scripts for Virtual Private Servers (specifically Ubuntu). This includes initial server setup (`initial-setup.sh`), Docker configurations, and user operation management.
+
+
+---
+
 ## Getting Started
 
 ### Prerequisites
@@ -27,51 +47,4 @@ In the event of a disaster, timely deployment of services is critical. This repo
 
 **1. Clone the Repository**:
    ```sh
-   git clone https://github.com/afet-yonetim-sistemi/devops.git
-   cd devops
-   ```
-
-**2. Configure AWS Credentials**:
-Ensure your AWS credentials are set up. You can configure them using the AWS CLI:
-**important**: profile must be set as ays
-
-   ```sh
-   aws configure --profile ays
-   ```
-
-**3. Initialize Terraform**:
-Navigate to the Terraform directory and initialize Terraform:
-   ```sh
-   cd terraform
-   terraform init
-   ```
-
-**4. Apply Terraform Configuration**:
-Apply the configuration to provision the necessary infrastructure:
-   ```sh
-   terraform apply
-   ```
-
-
-
-
-**Useful commands**
-- 
-
-
-**Destroy all resources**:
-Destroy all resources deployed with commands above:
-   ```sh
-   terraform destroy
-   ```
-
-**Show all resources**:
-Show all resources deployed with commands above:
-   ```sh
-   terraform show
-   ```
-**Format files**:
-In working directory format terraform files:
-   ```sh
-   terraform fmt --recursive
-   ```   
+   git clone <URL>
