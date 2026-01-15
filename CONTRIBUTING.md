@@ -13,7 +13,6 @@ you maintain a collaborative and inclusive environment for everyone involved.
 - [Submitting Changes](#submitting-changes)
 - [Code Style](#code-style)
 - [Commit Messages](#commit-messages)
-- [Testing](#testing)
 - [Documentation](#documentation)
 - [Community Guidelines](#community-guidelines)
 
@@ -118,7 +117,6 @@ including:
 When submitting changes, please ensure the following:
 
 - Your code adheres to the project's [code style guidelines](#code-style).
-- You have added appropriate tests for your changes (see [Testing](#testing)).
 - The documentation has been updated, if necessary (see [Documentation](#documentation)).
 - Your commits are clean and have clear commit messages (see [Commit Messages](#commit-messages)).
 
