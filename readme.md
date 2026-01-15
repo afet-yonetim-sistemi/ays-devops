@@ -27,7 +27,7 @@ In the event of a disaster, timely deployment of services is critical. This repo
 
 **1. Clone the Repository**:
    ```sh
-   git clone https://github.com/afet-yonetim-sistemi/devops.git
+   git clone https://github.com/afet-yonetim-sistemi/ays-devops.git
    cd devops
    ```
 

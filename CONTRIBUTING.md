@@ -35,7 +35,7 @@ Thank you for considering contributing to our project! To make the process smoot
 
 3. **Cloning the Project:**
     - Once added to the GitHub organization, clone the repository from the organization’s GitHub page.
-    - Clone the repository using the command: `git clone https://github.com/afet-yonetim-sistemi/ays-be`
+    - Clone the repository using the command: `git clone https://github.com/afet-yonetim-sistemi/ays-devops`
 
 4. **Create a New Branch:**
     - Create a branch for your contribution based on the `main` branch.
@@ -159,37 +159,6 @@ guidelines when writing commit messages:
 
 By following these guidelines, you contribute to a clear and understandable project history, facilitating easier code
 reviews and collaboration.
-
-## Testing
-
-If you are contributing code changes, it is crucial to include appropriate tests to ensure the stability and
-functionality of the project. Follow these guidelines when writing tests:
-
-- **Unit Tests:**
-    - Write unit tests to cover the new code you have added or modified.
-    - Ensure that each unit test is focused on a single aspect of the code to make it easy to understand and maintain.
-
-- **Integration Tests:**
-    - Include integration tests to verify that different parts of the system work together as expected.
-    - Make sure your integration tests cover scenarios where multiple components interact.
-
-- **Manual Tests:**
-    - Use Postman to write and execute manual tests for API endpoints and ensure they perform as intended.
-    - Document any manual test cases in a way that they can be easily replicated.
-
-- **Test-Driven Development (TDD):**
-    - When applicable, adopt the TDD approach. Write your tests before implementing the new code to ensure your changes
-      meet the required functionality from the start.
-
-- **Run Existing Test Suite:**
-    - Run the existing test suite before submitting your changes to ensure they haven't introduced any regressions.
-    - Address any failing tests that might be impacted by your changes.
-
-- **Instructions for Running Tests:**
-    - Provide clear instructions on how to run the tests, including any additional setup or specific commands needed.
-
-By following these guidelines, you help maintain the quality and stability of the project while making it easier for
-others to contribute and collaborate.
 
 ## Documentation
 
