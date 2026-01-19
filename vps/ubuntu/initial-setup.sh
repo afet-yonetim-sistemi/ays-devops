@@ -86,5 +86,8 @@ echo "🚀 Executing Docker setup on remote server..."
 ssh -p "$SSH_PORT" -t "${SSH_USER}@${SERVER_IP}" \
 "sudo bash -c 'cd /aysapps/setup; \
 chmod +x -R .; \
-bash ./docker/docker-setup.sh; \
+bash ./docker/docker-setup.sh && \
+bash ./github/github-setup.sh && \
+bash ./project/back-end/project-setup.sh && \
+bash ./project/front-end/project-setup.sh; \
 exec bash'"
