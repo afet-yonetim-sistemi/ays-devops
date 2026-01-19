@@ -1,7 +1,0 @@
-https://test-servis.afetyonetimsistemi.org/public/actuator/health
-
-
-https://test-kurum.afetyonetimsistemi.org/login
-
-kyle.joanne@afetyonetimsistemi.org
-A123y456S.
