@@ -1,0 +1,9 @@
+services:
+  application:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: application-landing-production
+    restart: on-failure
+    ports:
+      - '19791:19791'
