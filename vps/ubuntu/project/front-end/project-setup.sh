@@ -18,15 +18,15 @@ echo "
 :: AYS | Afet Yönetim Sistemi ::
 "
 
-cd /aysapps
-
-
 # === AYS FE LANDING SETUP ===
 # Clone repository, configure environment variables and start containers
 if [[ -d /aysapps/ays-fe-landing ]]; then
   echo ""
   echo "✅ AYS FE Landing project already installed (/aysapps/ays-fe-landing exists). Skipping installation."
 else
+
+  cd /aysapps
+
   # === LANDING APPLICATION CONFIGURATION ===
   # Ask for Landing application configuration parameters
   echo ""
@@ -64,6 +64,8 @@ if [[ -d /aysapps/ays-fe-institution ]]; then
   echo "✅ AYS FE Institution project already installed (/aysapps/ays-fe-institution exists). Skipping installation."
 else
 
+  cd /aysapps
+
   # === INSTITUTION APPLICATION CONFIGURATION ===
   # Ask for Institution application configuration parameters
   echo ""
@@ -96,6 +98,9 @@ if [[ -d /aysapps/ays-fe-landing-production ]]; then
   echo ""
   echo "✅ AYS FE Landing Production project already installed (/aysapps/ays-fe-landing-production exists). Skipping installation."
 else
+
+  cd /aysapps
+
   echo ""
   echo "📦 Setting up AYS FE Landing Production..."
   cp -r /aysapps/ays-fe-landing /aysapps/ays-fe-landing-production
@@ -118,6 +123,8 @@ if [[ -d /aysapps/ays-fe-landing-new ]]; then
   echo ""
   echo "✅ AYS FE Landing New project already installed (/aysapps/ays-fe-landing-new exists). Skipping installation."
 else
+
+  cd /aysapps
 
   # === LANDING NEW APPLICATION CONFIGURATION ===
   # Ask for Landing New application configuration parameters
