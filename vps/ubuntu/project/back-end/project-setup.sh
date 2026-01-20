@@ -71,6 +71,7 @@ SMTP_PASSWORD="${SMTP_PASSWORD:-ayssmtppass}"
 # Clone the repository and run initial setup
 echo ""
 echo "📦 Cloning AYS BE repository..."
+mkdir -p /aysapps
 cd /aysapps
 
 gh repo clone afet-yonetim-sistemi/ays-be
@@ -89,14 +90,14 @@ echo "🐳 Configuring Docker Compose..."
 cp /aysapps/setup/project/back-end/docker-compose.yml /aysapps/ays-be/docker-compose.yml
 
 # Replace all placeholders with actual values
-sed -i "s|{{DB_NAME}}|${DB_NAME}|g" /aysapps/ays-be/docker-compose.yml
-sed -i "s|{{DB_USER}}|${DB_USER}|g" /aysapps/ays-be/docker-compose.yml
-sed -i "s|{{DB_PASSWORD}}|${DB_PASSWORD}|g" /aysapps/ays-be/docker-compose.yml
-sed -i "s|{{DB_ROOT_PASSWORD}}|${DB_ROOT_PASSWORD}|g" /aysapps/ays-be/docker-compose.yml
-sed -i "s|{{DB_PORT}}|${DB_PORT}|g" /aysapps/ays-be/docker-compose.yml
-sed -i "s|{{CORS_ALLOWED_ORIGINS}}|${CORS_ALLOWED_ORIGINS}|g" /aysapps/ays-be/docker-compose.yml
-sed -i "s|{{SMTP_USERNAME}}|${SMTP_USERNAME}|g" /aysapps/ays-be/docker-compose.yml
-sed -i "s|{{SMTP_PASSWORD}}|${SMTP_PASSWORD}|g" /aysapps/ays-be/docker-compose.yml
+sed -i "s#{{DB_NAME}}#${DB_NAME}#g" /aysapps/ays-be/docker-compose.yml
+sed -i "s#{{DB_USER}}#${DB_USER}#g" /aysapps/ays-be/docker-compose.yml
+sed -i "s#{{DB_PASSWORD}}#${DB_PASSWORD}#g" /aysapps/ays-be/docker-compose.yml
+sed -i "s#{{DB_ROOT_PASSWORD}}#${DB_ROOT_PASSWORD}#g" /aysapps/ays-be/docker-compose.yml
+sed -i "s#{{DB_PORT}}#${DB_PORT}#g" /aysapps/ays-be/docker-compose.yml
+sed -i "s#{{CORS_ALLOWED_ORIGINS}}#${CORS_ALLOWED_ORIGINS}#g" /aysapps/ays-be/docker-compose.yml
+sed -i "s#{{SMTP_USERNAME}}#${SMTP_USERNAME}#g" /aysapps/ays-be/docker-compose.yml
+sed -i "s#{{SMTP_PASSWORD}}#${SMTP_PASSWORD}#g" /aysapps/ays-be/docker-compose.yml
 
 
 # === START DOCKER CONTAINERS ===
