@@ -57,6 +57,7 @@ done
 
 # === SAVE TOKEN AND AUTHENTICATE ===
 # Save the token to a file and authenticate GitHub CLI
+mkdir -p /aysapps/setup/github
 echo "${GITHUB_ACCESS_TOKEN}" > /aysapps/setup/github/access-token.txt
 
 gh auth login --with-token < /aysapps/setup/github/access-token.txt
