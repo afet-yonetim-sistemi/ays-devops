@@ -18,6 +18,8 @@ echo "
 :: AYS | Afet Yönetim Sistemi ::
 "
 
+mkdir -p /aysapps
+
 # === AYS FE LANDING SETUP ===
 # Clone repository, configure environment variables and start containers
 if [[ -d /aysapps/ays-fe-landing ]]; then
