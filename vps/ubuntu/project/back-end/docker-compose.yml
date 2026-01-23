@@ -1,0 +1,44 @@
+services:
+  database:
+    container_name: database
+    image: mysql:8.4.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: {{DB_NAME}}
+      MYSQL_USER: {{DB_USER}}
+      MYSQL_PASSWORD: {{DB_PASSWORD}}
+      MYSQL_ROOT_PASSWORD: {{DB_ROOT_PASSWORD}}
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_PORT: {{DB_PORT}}
+    volumes:
+      - ./docker/mysql:/var/lib/mysql
+    ports:
+      - "{{DB_PORT}}:3306"
+    networks:
+      - ays-network
+  application:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: application
+    restart: on-failure
+    ports:
+      - "9790:9790"
+    environment:
+      - AYS_SPRING_PROFILE=default,cors
+      - AYS_CORS_ALLOWED_ORIGINS={{CORS_ALLOWED_ORIGINS}}
+      - AYS_DB_PASSWORD={{DB_PASSWORD}}
+      - AYS_DB_WRITER_INSTANCE_IP=database
+      - AYS_DB_WRITER_INSTANCE_PORT=3306
+      - AYS_DB_READER_INSTANCE_IP=database
+      - AYS_DB_READER_INSTANCE_PORT=3306
+      - AYS_SMTP_USERNAME={{SMTP_USERNAME}}
+      - AYS_SMTP_PASSWORD={{SMTP_PASSWORD}}
+    networks:
+      - ays-network
+    depends_on:
+      - database
+
+networks:
+  ays-network:
+    driver: bridge
