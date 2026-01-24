@@ -89,5 +89,6 @@ chmod +x -R .; \
 bash ./docker/docker-setup.sh && \
 bash ./github/github-setup.sh && \
 bash ./project/back-end/project-setup.sh && \
-bash ./project/front-end/project-setup.sh; \
+bash ./project/front-end/project-setup.sh && \
+bash ./nginx/nginx-setup.sh; \
 exec bash'"
