@@ -23,7 +23,7 @@ This section provides a brief overview of the main directories. For specific det
 
 ### `terraform/`
 Contains the Infrastructure as Code (IaC) configuration files. This directory is responsible for provisioning and managing the cloud resources on AWS.
-> **Documentation:** Please refer to [terraform/README.md](https://github.com/afet-yonetim-sistemi/ays-devops/blob/readme/terraform/README.md) for module details and usage.
+> **Documentation:** Please refer to [terraform/README.md](https://github.com/afet-yonetim-sistemi/ays-devops/blob/main/terraform/README.md) for module details and usage.
 
 ### `aws/`
 Includes AWS-specific utility scripts and configurations, such as credential management, production monitoring scripts, and SonarQube setups for EC2 instances.
