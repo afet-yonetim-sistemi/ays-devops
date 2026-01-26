@@ -9,19 +9,17 @@ Before submitting your pull request, ensure the following:
       the [Branch Naming Conventions](https://github.com/afet-yonetim-sistemi/ays-devops/blob/main/CONTRIBUTING.md#branch-naming-conventions).
 
 - [ ] **Local Testing:**
-    - I have tested my changes locally on Postman, and they are working as expected.
+    - I have tested the changes locally (Terraform validate/plan, script execution, workflow validation).
+    - All configurations and scripts execute without errors.
 
 - [ ] **Code Quality:**
-    - The code is formatted according to the project's coding guidelines and style.
-    - The code has been reviewed to ensure its quality.
-    - The code does not contain any issues flagged by SonarLint.
+    - Code is properly formatted (terraform fmt, shellcheck).
+    - Scripts include error handling and follow security best practices.
+    - No sensitive information or hardcoded credentials are included.
 
 - [ ] **Documentation:**
-    - Necessary documentation has been added or existing documentation has been updated, specifically detailing changes made in Postman.
-
-- [ ] **Testing:**
-    - Relevant unit tests have been written and included.
-    - Relevant integration tests have been written and included.
+    - README or relevant documentation has been updated to reflect the changes.
+    - New scripts, variables, or configurations are documented.
 
 - [ ] **Reviewers and Assignees:**
     - Default reviewers have been assigned to this pull request.
