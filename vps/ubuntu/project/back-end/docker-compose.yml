@@ -16,6 +16,16 @@ services:
       - "{{DB_PORT}}:3306"
     networks:
       - ays-network
+  cache:
+    container_name: cache
+    image: redis:8.4.0
+    restart: on-failure
+    volumes:
+      - ./docker/redis:/data
+    ports:
+      - "{{CACHE_PORT}}:6379"
+    networks:
+      - ays-network
   application:
     build:
       context: .
@@ -34,10 +44,13 @@ services:
       - AYS_DB_READER_INSTANCE_PORT=3306
       - AYS_SMTP_USERNAME={{SMTP_USERNAME}}
       - AYS_SMTP_PASSWORD={{SMTP_PASSWORD}}
+      - AYS_CACHE_IP=cache
+      - AYS_CACHE_PORT=6379
     networks:
       - ays-network
     depends_on:
       - database
+      - cache
 
 networks:
   ays-network:

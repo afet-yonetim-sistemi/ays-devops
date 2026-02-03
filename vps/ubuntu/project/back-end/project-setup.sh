@@ -48,6 +48,14 @@ read -p "➡️ Enter database port (default: 63306): " DB_PORT
 DB_PORT="${DB_PORT:-63306}"
 
 
+# === CACHE CONFIGURATION INPUT ===
+# Ask for cache configuration parameters
+echo ""
+echo "💾 Cache Configuration"
+read -p "➡️ Enter cache port (default: 6380): " CACHE_PORT
+CACHE_PORT="${CACHE_PORT:-6380}"
+
+
 # === APPLICATION CONFIGURATION INPUT ===
 # Ask for application configuration parameters
 echo ""
@@ -95,6 +103,7 @@ sed -i "s#{{DB_USER}}#${DB_USER}#g" /aysapps/ays-be/docker-compose.yml
 sed -i "s#{{DB_PASSWORD}}#${DB_PASSWORD}#g" /aysapps/ays-be/docker-compose.yml
 sed -i "s#{{DB_ROOT_PASSWORD}}#${DB_ROOT_PASSWORD}#g" /aysapps/ays-be/docker-compose.yml
 sed -i "s#{{DB_PORT}}#${DB_PORT}#g" /aysapps/ays-be/docker-compose.yml
+sed -i "s#{{CACHE_PORT}}#${CACHE_PORT}#g" /aysapps/ays-be/docker-compose.yml
 sed -i "s#{{CORS_ALLOWED_ORIGINS}}#${CORS_ALLOWED_ORIGINS}#g" /aysapps/ays-be/docker-compose.yml
 sed -i "s#{{SMTP_USERNAME}}#${SMTP_USERNAME}#g" /aysapps/ays-be/docker-compose.yml
 sed -i "s#{{SMTP_PASSWORD}}#${SMTP_PASSWORD}#g" /aysapps/ays-be/docker-compose.yml
