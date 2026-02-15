@@ -54,6 +54,7 @@ mkdir -p /aysapps/sonarqube/sonarqube_data
 mkdir -p /aysapps/sonarqube/sonarqube_extensions
 mkdir -p /aysapps/sonarqube/sonarqube_logs
 mkdir -p /aysapps/sonarqube/sonarqube_temp
+mkdir -p /aysapps/sonarqube/postgresql_data
 
 
 # === CONFIGURE DOCKER COMPOSE ===
@@ -81,11 +82,8 @@ sed -i "s#{{SQ_WEB_PORT}}#${SQ_WEB_PORT}#g" /aysapps/sonarqube/docker-compose.ym
 # Ensure correct permissions for mapped volumes (SonarQube runs as non-root user 1000 usually)
 echo ""
 echo "🔐 Setting permissions..."
-chown -R 1000:1000 /aysapps/sonarqube/sonarqube_conf
-chown -R 1000:1000 /aysapps/sonarqube/sonarqube_data
-chown -R 1000:1000 /aysapps/sonarqube/sonarqube_extensions
-chown -R 1000:1000 /aysapps/sonarqube/sonarqube_logs
-chown -R 1000:1000 /aysapps/sonarqube/sonarqube_temp
+chown -R 1000:1000 /aysapps/sonarqube/sonarqube_*
+chown -R 999:999 /aysapps/sonarqube/postgresql_data
 
 
 # === START DOCKER CONTAINERS ===
