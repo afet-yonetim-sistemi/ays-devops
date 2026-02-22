@@ -66,9 +66,12 @@ echo "🐳 Configuring Docker Compose..."
 
 # Check if template exists, otherwise we might need to create it or download it
 if [[ -f /aysapps/setup/sonarqube/docker-compose.yml ]]; then
-    cp /aysapps/sonarqube/docker-compose.yml /aysapps/setup/sonarqube/docker-compose.yml
+    cp --update=none /aysapps/sonarqube/docker-compose.yml /aysapps/setup/sonarqube/docker-compose.yml
 else
-    echo "⚠️ Template not found! Creating a default Docker Compose file..."
+    echo "⚠️ Template not found! Please ensure that the /aysapps/sonarqube/docker-compose.yaml file exists."
+    # Stopping the script here to prevent failure if the template is missing:"
+    exit 1
+fi
 
 
 # Replace all placeholders with actual values
