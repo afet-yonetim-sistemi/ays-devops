@@ -32,16 +32,16 @@ fi
 echo ""
 echo "📊 SonarQube Database Configuration"
 read -p "➡️ Enter database name (default: sonarqube): " SQ_DB_NAME
-SQ_DB_NAME="${SQ_DB_NAME:-sonarqube}"
+SQ_DB_NAME="${SQ_DB_NAME}"
 
 read -p "➡️ Enter database user (default: sonar): " SQ_DB_USER
-SQ_DB_USER="${SQ_DB_USER:-sonar}"
+SQ_DB_USER="${SQ_DB_USER}"
 
 read -p "➡️ Enter database password (default: sonarpass): " SQ_DB_PASSWORD
-SQ_DB_PASSWORD="${SQ_DB_PASSWORD:-sonarpass}"
+SQ_DB_PASSWORD="${SQ_DB_PASSWORD}"
 
 read -p "➡️ Enter SonarQube web port (default: 9000): " SQ_WEB_PORT
-SQ_WEB_PORT="${SQ_WEB_PORT:-9009}"
+SQ_WEB_PORT="${SQ_WEB_PORT}"
 
 
 # === SETUP DIRECTORY STRUCTURE ===
