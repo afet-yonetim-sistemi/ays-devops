@@ -7,6 +7,7 @@
 # nano sonarqube-setup.sh
 # chmod +x sonarqube-setup.sh
 # sudo ./sonarqube-setup.sh
+# Note: Variables will be automatically retrieved from the GitHub Actions environment.
 
 echo "
      ___  ____    ____  _______,
@@ -26,24 +27,6 @@ if [[ -d /aysapps/sonarqube ]]; then
   exit 0
 fi
 
-
-# === DATABASE CONFIGURATION INPUT ===
-# Ask for PostgreSQL configuration parameters for SonarQube
-echo ""
-echo "📊 SonarQube Database Configuration"
-read -p "➡️ Enter database name (default: sonarqube): " SQ_DB_NAME
-SQ_DB_NAME="${SQ_DB_NAME}"
-
-read -p "➡️ Enter database user (default: sonar): " SQ_DB_USER
-SQ_DB_USER="${SQ_DB_USER}"
-
-read -p "➡️ Enter database password (default: sonarpass): " SQ_DB_PASSWORD
-SQ_DB_PASSWORD="${SQ_DB_PASSWORD}"
-
-read -p "➡️ Enter SonarQube web port (default: 9000): " SQ_WEB_PORT
-SQ_WEB_PORT="${SQ_WEB_PORT}"
-
-
 # === SETUP DIRECTORY STRUCTURE ===
 # Create necessary directories
 echo ""
@@ -55,30 +38,24 @@ mkdir -p /aysapps/sonarqube/sonarqube_extensions
 mkdir -p /aysapps/sonarqube/sonarqube_logs
 mkdir -p /aysapps/sonarqube/sonarqube_temp
 mkdir -p /aysapps/sonarqube/postgresql_data
+mkdir -p /aysapps/sonarqube/pgadmin_data
 
 
 # === CONFIGURE DOCKER COMPOSE ===
-# Copy docker-compose.yml template and replace placeholders with user input
-# Assuming the template exists in /aysapps/setup/sonarqube/docker-compose.yml based on your structure
+# Copy docker-compose.yaml template and replace placeholders with user input
+# Assuming the template exists in /aysapps/setup/sonarqube/docker-compose.yaml based on your structure
 echo ""
 echo "🐳 Configuring Docker Compose..."
 
 
 # Check if template exists, otherwise we might need to create it or download it
-if [[ -f /aysapps/setup/sonarqube/docker-compose.yml ]]; then
-    cp --update=none /aysapps/sonarqube/docker-compose.yml /aysapps/setup/sonarqube/docker-compose.yml
+if [[ -f ./docker-compose.yaml ]]; then
+    cp ./docker-compose.yaml /aysapps/sonarqube/docker-compose.yaml
 else
-    echo "⚠️ Template not found! Please ensure that the /aysapps/sonarqube/docker-compose.yaml file exists."
+    echo "⚠️ Template not found! Please ensure that the ./docker-compose.yaml file exists."
     # Stopping the script here to prevent failure if the template is missing:"
     exit 1
 fi
-
-
-# Replace all placeholders with actual values
-sed -i "s#{{SQ_DB_NAME}}#${SQ_DB_NAME}#g" /aysapps/sonarqube/docker-compose.yml
-sed -i "s#{{SQ_DB_USER}}#${SQ_DB_USER}#g" /aysapps/sonarqube/docker-compose.yml
-sed -i "s#{{SQ_DB_PASSWORD}}#${SQ_DB_PASSWORD}#g" /aysapps/sonarqube/docker-compose.yml
-sed -i "s#{{SQ_WEB_PORT}}#${SQ_WEB_PORT}#g" /aysapps/sonarqube/docker-compose.yml
 
 
 # === PERMISSIONS ===
