@@ -27,6 +27,30 @@ if [[ -d /aysapps/sonarqube ]]; then
   exit 0
 fi
 
+
+# === DATABASE CONFIGURATION INPUT ===
+# Ask for PostgreSQL configuration parameters for SonarQube
+echo ""
+echo "📊 SonarQube Database Configuration"
+read -p "➡️ Enter database name (default: sonarqube): " SQ_DB_NAME
+SQ_DB_NAME="${SQ_DB_NAME:-sonarqube}"
+
+read -p "➡️ Enter database user (default: sonar): " SQ_DB_USER
+SQ_DB_USER="${SQ_DB_USER:-sonar}"
+
+read -p "➡️ Enter database password (default: sonarpass): " SQ_DB_PASSWORD
+SQ_DB_PASSWORD="${SQ_DB_PASSWORD:-sonarpass}"
+
+read -p "➡️ Enter SonarQube web port (default: 9009): " SQ_WEB_PORT
+SQ_WEB_PORT="${SQ_WEB_PORT:-9009}"
+
+read -p "➡️ Enter PgAdmin email (default: admin@admin.com): " PGADMIN_EMAIL
+PGADMIN_EMAIL="${PGADMIN_EMAIL:-admin@admin.com}"
+
+read -p "➡️ Enter PgAdmin password (default: admin): " PGADMIN_PASSWORD
+PGADMIN_PASSWORD="${PGADMIN_PASSWORD:-admin}"
+
+
 # === SETUP DIRECTORY STRUCTURE ===
 # Create necessary directories
 echo ""
