@@ -34,14 +34,6 @@ echo "📦 Installing Nginx..."
 sudo apt install nginx
 
 
-# === CONFIGURE FIREWALL ===
-# Allow HTTPS traffic through the firewall
-echo ""
-echo "🔥 Configuring firewall rules..."
-sudo ufw allow 'Nginx HTTPS'
-sudo ufw allow 443/tcp
-
-
 # === ENABLE NGINX SERVICE ===
 # Enable Nginx to start automatically on system boot
 echo ""
@@ -120,6 +112,58 @@ mv /aysapps/setup/nginx/nginx.conf /etc/nginx/nginx.conf
 # === DOMAIN CONFIGURATION REMINDER ===
 # 🚨 IMPORTANT: Configure DNS A records before running this script.
 # For detailed instructions, see: vps/ubuntu/nginx/README.md
+
+
+# === CLOUDFLARE REAL IP CONFIGURATION ===
+# Fetch Cloudflare's IP ranges and write them to cloudflare-realip.conf
+# so Nginx can resolve the real client IP from the CF-Connecting-IP header
+echo ""
+echo "☁️ Configuring Cloudflare real IP ranges..."
+{
+  for ip in $(curl -s https://www.cloudflare.com/ips-v4); do echo "set_real_ip_from $ip;"; done
+  for ip in $(curl -s https://www.cloudflare.com/ips-v6); do echo "set_real_ip_from $ip;"; done
+  echo "real_ip_header CF-Connecting-IP;"
+} | sudo tee /etc/nginx/cloudflare-realip.conf
+
+
+# === RATE LIMITING ZONES CONFIGURATION ===
+# Define shared rate limiting zones at the http{} level via conf.d.
+# Real client IP (Cloudflare) is resolved here so rate limit keys use the
+# actual visitor IP instead of Cloudflare's edge IP. Zone rates are initial
+# values; calibrate them based on production logs.
+echo ""
+echo "🚦 Configuring rate limiting zones..."
+sudo tee /etc/nginx/conf.d/00-ratelimit-zones.conf > /dev/null <<'EOF'
+# Rate limiting - shared zone definitions (http{} level)
+
+# Real client IP (Cloudflare)
+include /etc/nginx/cloudflare-realip.conf;
+
+# Whitelist (runs on the real IP resolved by realip)
+geo $rate_limit_exempt {
+    default          1;
+    127.0.0.1        0;
+}
+map $rate_limit_exempt $limit_key {
+    0 "";
+    1 $binary_remote_addr;
+}
+
+# Zone definitions (initial values; calibrate based on logs)
+limit_req_zone $limit_key zone=qr_auth:10m    rate=30r/m;
+limit_req_zone $limit_key zone=qr_write:10m   rate=10r/s;
+limit_req_zone $limit_key zone=qr_general:10m rate=50r/s;
+
+limit_conn_zone $binary_remote_addr zone=qr_conn:10m;
+
+limit_req_status  429;
+limit_conn_status 429;
+limit_req_log_level warn;
+
+log_format qr_ratelimit '$remote_addr - [$time_local] "$request" '
+                        '$status req=$limit_req_status conn=$limit_conn_status '
+                        'cf_ray=$http_cf_ray cc=$http_cf_ipcountry';
+EOF
 
 
 # === TEST AND RESTART NGINX ===
