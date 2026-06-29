@@ -76,6 +76,31 @@ mv /home/${SSH_USER}/setup /aysapps/setup
 # Set root ownership for security and consistency
 chown -R root:root /aysapps/setup
 
+
+# === SSH HARDENING ===
+# Create a hardening config with highest load order (00-) to enforce key-based login only
+tee /etc/ssh/sshd_config.d/00-hardening.conf > /dev/null <<'SSHEOF'
+PasswordAuthentication no
+KbdInteractiveAuthentication no
+PermitRootLogin no
+SSHEOF
+sshd -t && systemctl reload ssh
+
+
+# === CONFIGURE FIREWALL ===
+# Allow HTTPS traffic through the firewall
+ufw --force reset
+ufw allow 22/tcp comment 'SSH key-only'
+CF4=\$(curl -fsS https://www.cloudflare.com/ips-v4)
+CF6=\$(curl -fsS https://www.cloudflare.com/ips-v6)
+for ip in \$CF4 \$CF6; do
+  ufw allow proto tcp from "\$ip" to any port 443 comment 'Cloudflare HTTPS'
+  ufw allow proto tcp from "\$ip" to any port 80 comment 'Cloudflare HTTP'
+done
+ufw default deny incoming
+ufw default allow outgoing
+ufw --force enable
+
 EOF"
 
 
