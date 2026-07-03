@@ -126,46 +126,6 @@ echo "☁️ Configuring Cloudflare real IP ranges..."
 } | sudo tee /etc/nginx/cloudflare-realip.conf
 
 
-# === RATE LIMITING ZONES CONFIGURATION ===
-# Define shared rate limiting zones at the http{} level via conf.d.
-# Real client IP (Cloudflare) is resolved here so rate limit keys use the
-# actual visitor IP instead of Cloudflare's edge IP. Zone rates are initial
-# values; calibrate them based on production logs.
-echo ""
-echo "🚦 Configuring rate limiting zones..."
-sudo tee /etc/nginx/conf.d/00-ratelimit-zones.conf > /dev/null <<'EOF'
-# Rate limiting - shared zone definitions (http{} level)
-
-# Real client IP (Cloudflare)
-include /etc/nginx/cloudflare-realip.conf;
-
-# Whitelist (runs on the real IP resolved by realip)
-geo $rate_limit_exempt {
-    default          1;
-    127.0.0.1        0;
-}
-map $rate_limit_exempt $limit_key {
-    0 "";
-    1 $binary_remote_addr;
-}
-
-# Zone definitions (initial values; calibrate based on logs)
-limit_req_zone $limit_key zone=qr_auth:10m    rate=30r/m;
-limit_req_zone $limit_key zone=qr_write:10m   rate=10r/s;
-limit_req_zone $limit_key zone=qr_general:10m rate=50r/s;
-
-limit_conn_zone $binary_remote_addr zone=qr_conn:10m;
-
-limit_req_status  429;
-limit_conn_status 429;
-limit_req_log_level warn;
-
-log_format qr_ratelimit '$remote_addr - [$time_local] "$request" '
-                        '$status req=$limit_req_status conn=$limit_conn_status '
-                        'cf_ray=$http_cf_ray cc=$http_cf_ipcountry';
-EOF
-
-
 # === TEST AND RESTART NGINX ===
 # Test configuration and restart Nginx service
 echo ""
