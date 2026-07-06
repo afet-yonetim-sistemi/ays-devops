@@ -2,8 +2,7 @@ import os
 import requests
 import time
 from bs4 import BeautifulSoup
-
-# 1. YAPILANDIRMA (Slack'ten aldığınız linki buraya yapıştırın)
+ 
 SLACK_WEBHOOK_URL = os.environ.get("SLACK_WEBHOOK_URL", "")
 MAGNITUDE_THRESHOLD = float(os.environ.get("MAGNITUDE_THRESHOLD", "5.0"))
 CHECK_INTERVAL = int(os.environ.get("CHECK_INTERVAL", "300"))
@@ -72,7 +71,6 @@ def check_earthquakes():
             if len(cols) < 7:
                 continue
                 
-            # Sütunları sırasıyla güvenle parçalıyoruz
             time_str = cols[0].text.strip()
             depth = cols[3].text.strip()
             
@@ -93,7 +91,7 @@ def check_earthquakes():
 if __name__ == "__main__":
     print("🚨 AYS - Resmi AFAD Deprem Takip Botu Başlatıldı...")
     
-    # İlk açılışta bağlantıyı doğrulamak için Slack'e test mesajı gönderiyoruz
+    # Send a test message to Slack on startup to verify the connection.
     send_to_slack(0, "", "", "", is_test=True)
     
     while True:
