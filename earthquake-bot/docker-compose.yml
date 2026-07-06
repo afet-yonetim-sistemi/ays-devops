@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  earthquake-bot:
+    build: .
+    container_name: ays-earthquake-bot
+    restart: unless-stopped
+    environment:
+      - SLACK_WEBHOOK_URL=${SLACK_WEBHOOK_URL}
+      # 🚨 DEĞERLERİ TEST STANDARTINA ÇEKİYORUZ:
+      - MAGNITUDE_THRESHOLD=5.0   # Sadece 5.0 ve üzeri depremleri bildirsin
+      - CHECK_INTERVAL=300        # 5 dakikada bir (300 saniye) kontrol etsin
