@@ -1,5 +1,5 @@
 services:
-  earthquake-bot:
+  slack-bot-earthquake:
     build:
       context: .
       dockerfile: Dockerfile
