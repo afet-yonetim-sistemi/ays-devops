@@ -2,7 +2,7 @@ services:
   earthquake-bot:
     build: .
     container_name: slack-bot-earthquake
-    restart: unless-stopped
+    restart: always
     environment:
       - SLACK_WEBHOOK_URL=${SLACK_WEBHOOK_URL}
       - MAGNITUDE_THRESHOLD=5.0   # Report only 5.0+ earthquakes.
