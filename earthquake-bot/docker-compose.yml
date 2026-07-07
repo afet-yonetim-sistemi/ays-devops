@@ -1,7 +1,7 @@
 services:
   earthquake-bot:
     build: .
-    container_name: ays-earthquake-bot
+    container_name: slack-bot-earthquake
     restart: unless-stopped
     environment:
       - SLACK_WEBHOOK_URL=${SLACK_WEBHOOK_URL}
