@@ -1,6 +1,8 @@
 services:
   earthquake-bot:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: slack-bot-earthquake
     restart: always
     environment:
