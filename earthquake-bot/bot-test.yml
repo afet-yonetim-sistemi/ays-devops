@@ -1,26 +1,25 @@
-name: Deprem Botu Canlı Bağlantı Testi
+name: Earthquake Bot Live Connection Test
 
 on:
-  # Bir Pull Request (PR) açıldığında bu test otomatik tetiklenecek
   pull_request:
 
 jobs:
   test-bot:
     runs-on: ubuntu-latest
     steps:
-      - name: Kodları Depodan Çek
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Python Ortamını Kur
+      - name: Setup Python Environment
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
-      - name: Gerekli Kütüphaneleri Yükle
+      - name: Install Dependencies
         run: |
           pip install requests beautifulsoup4
 
-      - name: Botu Çalıştır ve Slack'i Test Et
+      - name: Run Bot and Test Slack Connection
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           MAGNITUDE_THRESHOLD: '5.0'
