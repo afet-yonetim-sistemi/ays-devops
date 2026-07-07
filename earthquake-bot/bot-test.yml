@@ -2,6 +2,9 @@ name: Earthquake Bot Live Connection Test
 
 on:
   pull_request:
+    types:
+      - opened # triggers the workflow when a pull request is opened.
+      - ready_for_review # triggers the workflow when a pull request is marked as ready for review
 
 jobs:
   test-bot:
