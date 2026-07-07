@@ -1,51 +1,48 @@
 #!/bin/bash
 
 # ==============================================================================
-# AYS (Afet Yönetim Sistemi) - IP Kısıtlama Yapılandırma Scripti
+# AYS - IP Restriction Configuration Script
 # ==============================================================================
 
-# Canlı sunucu için hedef Nginx klasörü
 SERVER_CONF_PATH="/etc/nginx/conf.d/ays_ip_restriction.conf"
 
-# Lokal bilgisayarda test ederken hata vermemesi için proje klasörünün içine yazar
+# If local, write to project folder so it doesn't throw an error
 if [ -d "/etc/nginx/conf.d" ]; then
     NGINX_CONF_PATH=$SERVER_CONF_PATH
 else
     NGINX_CONF_PATH="./ays_ip_restriction.conf"
 fi
 
-# İzin Verilecek IP Adresleri Listesi
+# Allowed IPs
 ALLOWED_IPS=(
     "127.0.0.1"      # Lokal makine
     "192.168.1.50"   # Örnek İç Ağ IP'si
     "203.0.113.195"  # Örnek Güvenli Dış IP
 )
 
-echo "🔒 AYS IP Kısıtlama Yapılandırması Başlatılıyor..."
+echo " Starting AYS IP restriction configuration..."
 
-# Eski konfigürasyon dosyasını temizle ve yeniden oluştur
+# Clear and reset the old file
 echo "# ==================================================" > "$NGINX_CONF_PATH"
-echo "# AYS GÜVENLİ ERİŞİM IP LİSTESİ (Otomatik Oluşturuldu)" >> "$NGINX_CONF_PATH"
+echo "# AYS ALLOWED IP LIST (Auto-generated)" >> "$NGINX_CONF_PATH"
 echo "# ==================================================" >> "$NGINX_CONF_PATH"
 
-# Döngü ile izin verilen tüm IP'leri dosyaya 'allow' kuralı olarak yaz
+# Add allowed IPs to the file
 for ip in "${ALLOWED_IPS[@]}"; do
     echo "allow $ip;" >> "$NGINX_CONF_PATH"
-    echo "➕ İzin verilen IP eklendi: $ip"
+    echo " Added allowed IP: $ip"
 done
 
-# Listede olmayan geri kalan herkesi engelle
 echo "deny all;" >> "$NGINX_CONF_PATH"
-echo "🚫 Geri kalan tüm IP adresleri için engelleme kuralı (deny all) yazıldı."
+echo " Deny all rule added for all other IPs."
 
 echo "--------------------------------------------------"
-echo "🔄 Nginx konfigürasyonu test ediliyor ve yeniden yükleniyor..."
+echo " Testing and reloading Nginx..."
 
-# Sunucuda Nginx kurulu mu kontrol et
 if command -v nginx &> /dev/null; then
     nginx -t && systemctl reload nginx
-    echo "✅ IP kısıtlama kuralları başarıyla canlıya alındı!"
+    echo "✅ IP restrictions are live now!"
 else
-    echo "⚠️ Uyarı: Nginx sunucuda bulunamadı. Konfigürasyon dosyası yerelde üretildi."
-    echo "📁 Üretilen dosya konumu: $NGINX_CONF_PATH"
+    echo "⚠️ Warning: Nginx not found. Created the file locally instead."
+    echo " File path: $NGINX_CONF_PATH"
 fi
