@@ -34,14 +34,6 @@ echo "📦 Installing Nginx..."
 sudo apt install nginx
 
 
-# === CONFIGURE FIREWALL ===
-# Allow HTTPS traffic through the firewall
-echo ""
-echo "🔥 Configuring firewall rules..."
-sudo ufw allow 'Nginx HTTPS'
-sudo ufw allow 443/tcp
-
-
 # === ENABLE NGINX SERVICE ===
 # Enable Nginx to start automatically on system boot
 echo ""
@@ -120,6 +112,18 @@ mv /aysapps/setup/nginx/nginx.conf /etc/nginx/nginx.conf
 # === DOMAIN CONFIGURATION REMINDER ===
 # 🚨 IMPORTANT: Configure DNS A records before running this script.
 # For detailed instructions, see: vps/ubuntu/nginx/README.md
+
+
+# === CLOUDFLARE REAL IP CONFIGURATION ===
+# Fetch Cloudflare's IP ranges and write them to cloudflare-realip.conf
+# so Nginx can resolve the real client IP from the CF-Connecting-IP header
+echo ""
+echo "☁️ Configuring Cloudflare real IP ranges..."
+{
+  for ip in $(curl -s https://www.cloudflare.com/ips-v4); do echo "set_real_ip_from $ip;"; done
+  for ip in $(curl -s https://www.cloudflare.com/ips-v6); do echo "set_real_ip_from $ip;"; done
+  echo "real_ip_header CF-Connecting-IP;"
+} | sudo tee /etc/nginx/cloudflare-realip.conf
 
 
 # === TEST AND RESTART NGINX ===
