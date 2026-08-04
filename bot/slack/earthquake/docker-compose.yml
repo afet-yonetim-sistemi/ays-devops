@@ -1,0 +1,11 @@
+services:
+  slack-bot-earthquake:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: slack-bot-earthquake
+    restart: always
+    environment:
+      - SLACK_WEBHOOK_URL=${SLACK_WEBHOOK_URL}
+      - MAGNITUDE_THRESHOLD=5.0   # Report only 5.0+ earthquakes.
+      - CHECK_INTERVAL=300        # Check every 5 minutes (300 seconds).

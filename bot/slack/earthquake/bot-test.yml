@@ -1,0 +1,33 @@
+name: Earthquake Bot Live Connection Test
+
+on:
+  pull_request:
+    types:
+      - opened # triggers the workflow when a pull request is opened.
+      - ready_for_review # triggers the workflow when a pull request is marked as ready for review
+
+jobs:
+  test-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python Environment
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: |
+          pip install requests beautifulsoup4
+
+      - name: Run Bot and Test Slack Connection
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          MAGNITUDE_THRESHOLD: '5.0'
+          CHECK_INTERVAL: '10'
+        run: |
+          python earthquake-bot/bot.py &
+          sleep 15
+          kill $!
